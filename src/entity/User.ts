@@ -39,48 +39,6 @@ export interface AuthToken {
   kind: string;
 }
 
-// const userSchema = new EntitySchema({
-//   name: "user",
-//   columns: {
-//     email: { 
-//       type: String, 
-//       unique: true 
-//     },
-//     password: {
-//       type: String
-//     },
-//     passwordResetToken: {
-//       type: String
-//     },
-//     passwordResetExpires: {
-//       type: Date
-//     },
-//     facebook: {
-//       type: String
-//     },
-//     twitter: {
-//       type: String
-//     },
-//     google: {
-//       type: String
-//     },
-//     tokens: {
-//       type: String
-//     },
-//     profile: {
-//       type: Profile,
-//     }
-//   },
-//   uniques: [
-//     {
-//       name: "UNIQUE_TEST",
-//       columns: [
-//         "email"
-//       ]
-//     }
-//   ]
-// });
-
 @Entity()
 export class User extends BaseEntity{
 
@@ -220,45 +178,3 @@ export class User extends BaseEntity{
     return `https://gravatar.com/avatar/${md5}?s=${size}&d=retro`;
   }
 }
-
-// export const UserEntity = new EntitySchema<UserDocument>({
-//   name: "user",
-//     columns: {
-//     email: { 
-//       type: String, 
-//       unique: true 
-//     },
-//     password: {
-//       type: String
-//     },
-//     passwordResetToken: {
-//       type: String
-//     },
-//     passwordResetExpires: {
-//       type: Date
-//     },
-//     facebook: {
-//       type: String
-//     },
-//     twitter: {
-//       type: String
-//     },
-//     google: {
-//       type: String
-//     },
-//     tokens: {
-//       type: String
-//     },
-//     profile: {
-//       type: Profile,
-//     }
-//   },
-//   uniques: [
-//     {
-//       name: "UNIQUE_TEST",
-//       columns: [
-//         "email"
-//       ]
-//     }
-//   ]
-// });
