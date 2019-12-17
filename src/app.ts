@@ -22,12 +22,12 @@ const redisClient = redis.createClient(REDIS_URL, { auth_pass: "1993618@jack" })
 
 // Controllers (route handlers)
 import * as homeController from "./controllers/home";
-import * as userController from "./controllers/user_tmp";
-import * as apiController from "./controllers/api_tmp";
+import * as userController from "./controllers/user";
+import * as apiController from "./controllers/api";
 import * as contactController from "./controllers/contact";
 
 // API keys and Passport configuration
-import * as passportConfig from "./config/passport_tmp";
+import * as passportConfig from "./config/passport";
 
 // Create Express server
 const app = express();
