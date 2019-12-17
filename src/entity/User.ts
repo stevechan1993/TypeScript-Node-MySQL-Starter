@@ -59,12 +59,6 @@ export class User extends BaseEntity{
 
   private tempPassword: string;
 
-  // constructor(email: string, password: string) {
-  //   super();
-  //   this.email = email;
-  //   this.password = password;
-  // }
-
   @AfterInsert()
   @AfterUpdate()
   private loadTempPassword(): void {
@@ -104,7 +98,6 @@ export class User extends BaseEntity{
   @Column("simple-array",{
     nullable: true
   })
-  // tokens: Array<AuthToken> = [];
   tokens: AuthToken[] = [];
 
   @Column("simple-json", {
@@ -128,40 +121,9 @@ export class User extends BaseEntity{
   @BeforeUpdate()
   genSalt: any = function() {
     if (this.tempPassword === this.password) {return;}
-
-    // sync
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(this.password, salt);
     this.password = hash;
-
-    // async =>
-    // const user = this as UserDocument;
-    // bcrypt.genSalt(10, (err, salt) => {
-    //   if (err) {
-    //     return err;
-    //   }
-    //   bcrypt.hash(user.password, salt, undefined, (err: Error, hash) => {
-    //     if (err) {
-    //       return err;
-    //     }
-    //     user.password = hash;
-    //   });
-    // });
-
-    // async
-    // const user = this as UserDocument;
-    // bcrypt.genSalt(10, function (err, salt) {
-    //   if (err) {
-    //     return err;
-    //   }
-    //   bcrypt.hash(user.password, salt, undefined, function(err, hash) {
-    //     if (err) {
-    //       return err;
-    //     }
-    //     // Store hash in your password DB. 
-    //     user.password = hash;
-    //   });
-    // });
   };
 
   comparePassword: comparePasswordFunction = function(candidatePassword, cb) {
