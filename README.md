@@ -32,38 +32,33 @@ We will try to keep this as up-to-date as possible, but community contributions 
 # Pre-reqs
 To build and run this app locally you will need a few things:
 - Install [Node.js](https://nodejs.org/en/)
-- Install [MongoDB](https://docs.mongodb.com/manual/installation/)
 - Install [VS Code](https://code.visualstudio.com/)
+- Install [Redis](https://redis.io/)
 - Install [MySQL](https://www.mysql.com/downloads/)
 
 # Getting started
 - Clone the repository
 ```
-git clone --depth=1 https://github.com/Microsoft/TypeScript-Node-Starter.git <project_name>
+git clone https://github.com/stevechan1993/TypeScript-Node-MySQL-Starter.git
 ```
 - Install dependencies
 ```
 cd <project_name>
 npm install
 ```
-- Configure your mongoDB server
+- Configure your MySQL server
 ```bash
 # create the db directory
-sudo mkdir -p /data/db
-# give the db correct read/write permissions
-sudo chmod 777 /data/db
-
-# starting from macOS 10.15 even the admin cannot create directory at root
-# so lets create the db diretory under the home directory.
-mkdir -p ~/data/db
-# user account has automatically read and write permissions for ~/data/db.
 ```
-- Start your mongoDB server (you'll probably want another command prompt)
+- Start your MySQL server
 ```bash
-mongod
-
-# on macOS 10.15 or above the db directory is under home directory
-mongod --dbpath ~/data/db
+# start docker stack
+```
+- Configure your Redis server
+```bash
+```
+- Start your Redis server
+```bash
 ```
 - Build and run the project
 ```

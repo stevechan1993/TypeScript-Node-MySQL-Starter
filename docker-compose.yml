@@ -1,0 +1,59 @@
+version: "3.7"
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: "db"
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: "root"
+      # You can use whatever password you like
+      MYSQL_PASSWORD: "password"
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: "password"
+    ports:
+      - "3306:3306"
+    volumes:
+      # Where our data will be persisted
+      - ~/mysql/data/db:/var/lib/mysql
+      - ~/mysql/conf/my.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+        monitor: 30s
+        max_failure_ratio: 0.1
+        order: start-first
+    networks:
+      - webnet
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      # redis持久化数据文件所在目录
+      - ~/redis/data:/data
+      # redis配置文件
+      - ~/redis/conf/redis.conf:/etc/redis.conf
+      # redis日志文件
+      - ~/redis/logs:/var/log/redis
+    command:
+      # 通过配置文件启动
+      redis-server /etc/redis.conf
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+        monitor: 30s
+        max_failure_ratio: 0.1
+        order: start-first
+    networks:
+      - webnet
+networks:
+  webnet:
+    external: true
