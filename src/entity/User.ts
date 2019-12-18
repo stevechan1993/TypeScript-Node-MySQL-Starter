@@ -15,7 +15,7 @@ export interface UserDocument {
   gravatar: (size: number) => string;
 }
 
-type comparePasswordFunction = (candidatePassword: string, cb: (err: any, isMatch: any) => {}) => void;
+type comparePasswordFunction = (candidatePassword: string, cb: (err: Error, isMatch: boolean) => {}) => void;
 
 export interface Profile {
   name: string;
@@ -109,7 +109,7 @@ export class User extends BaseEntity implements UserDocument {
 
   @BeforeInsert()
   @BeforeUpdate()
-  genSalt: any = function () {
+  genSalt = function () {
     if (this.tempPassword === this.password) { return; }
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(this.password, salt);
@@ -122,7 +122,7 @@ export class User extends BaseEntity implements UserDocument {
     });
   };
 
-  gravatar: any = function (size: number = 200) {
+  gravatar = function (size: number = 200) {
     if (!this.email) {
       return `https://gravatar.com/avatar/?s=${size}&d=retro`;
     }
