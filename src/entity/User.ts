@@ -7,7 +7,7 @@ export interface UserDocument {
   email: string;
   password: string;
   passwordResetToken: string;
-  passwordResetExpires: Date;
+  passwordResetExpires: string;
   facebook: string;
   tokens: AuthToken[];
   profile: Profile;
@@ -17,20 +17,11 @@ export interface UserDocument {
 
 type comparePasswordFunction = (candidatePassword: string, cb: (err: any, isMatch: any) => {}) => void;
 
-export class Profile {
-  @Column()
+export interface Profile {
   name: string;
-
-  @Column()
   gender: string;
-
-  @Column()
   location: string;
-
-  @Column()
   website: string;
-
-  @Column()
   picture: string;
 }
 
@@ -40,8 +31,7 @@ export interface AuthToken {
 }
 
 @Entity()
-export class User extends BaseEntity{
-
+export class User extends BaseEntity implements UserDocument {
   @PrimaryGeneratedColumn("uuid")
   id: number;
 
@@ -95,7 +85,7 @@ export class User extends BaseEntity{
   })
   google: string;
 
-  @Column("simple-array",{
+  @Column("simple-array", {
     nullable: true
   })
   tokens: AuthToken[] = [];
@@ -103,10 +93,10 @@ export class User extends BaseEntity{
   @Column("simple-json", {
     nullable: true
   })
-  profile: { 
+  profile: {
     name: string;
     gender: string;
-    location: string; 
+    location: string;
     website: string;
     picture: string;
   };
@@ -119,20 +109,20 @@ export class User extends BaseEntity{
 
   @BeforeInsert()
   @BeforeUpdate()
-  genSalt: any = function() {
-    if (this.tempPassword === this.password) {return;}
+  genSalt: any = function () {
+    if (this.tempPassword === this.password) { return; }
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(this.password, salt);
     this.password = hash;
   };
 
-  comparePassword: comparePasswordFunction = function(candidatePassword, cb) {
+  comparePassword: comparePasswordFunction = function (candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this.password, (err: Error, isMatch: boolean) => {
       cb(err, isMatch);
     });
   };
 
-  gravatar: any = function(size: number = 200) {
+  gravatar: any = function (size: number = 200) {
     if (!this.email) {
       return `https://gravatar.com/avatar/?s=${size}&d=retro`;
     }
