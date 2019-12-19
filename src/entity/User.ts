@@ -32,6 +32,13 @@ type comparePasswordFunction = (candidatePassword: string, cb: (err: Error, isMa
 
 @Entity()
 export class User extends BaseEntity implements UserDocument {
+  constructor(email?: string, password?: string, profile?: Profile ) {
+    super();
+    this.email = email;
+    this.password = password;
+    this.profile = profile;
+  }
+
   @PrimaryGeneratedColumn("uuid")
   id: number;
 

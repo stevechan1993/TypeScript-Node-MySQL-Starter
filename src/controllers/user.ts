@@ -93,17 +93,15 @@ export const postSignup = async (req: Request, res: Response, next: NextFunction
     return res.redirect("/signup");
   }
 
-  const user = new User();
-
-  user.email = req.body.email;
-  user.password = req.body.password;
-  user.profile = {
+  const profile = {
     name: "",
     gender: "",
     location: "",
     website: "",
     picture: ""
   };
+
+  const user = new User(req.body.email, req.body.password, profile);
 
   await User.findOne({email: req.body.email}).then(async existingUser => {
     if (existingUser) {

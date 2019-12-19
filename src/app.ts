@@ -29,6 +29,7 @@ import * as passportConfig from "./config/passport";
 // Create Express server
 const app = express();
 
+// Connect to MySQL
 createConnection({
     type: "mysql",
     host: MYSQL_URL || "localhost",
