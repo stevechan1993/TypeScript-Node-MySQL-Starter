@@ -11,14 +11,11 @@ import passport from "passport";
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 import { User } from "./entity/User";
-import { 
-    REDIS_URL, 
-    SESSION_SECRET 
-} from "./util/secrets";
+import { REDIS_URL, REDIS_PASSWORD, MYSQL_URL, MYSQL_PASSWORD, MYSQL_USERNAME, MYSQL_DATABASE, SESSION_SECRET } from "./util/secrets";
 
 const RedisStore = connectRedis(session);
 // eslint-disable-next-line @typescript-eslint/camelcase
-const redisClient = redis.createClient(REDIS_URL, { auth_pass: "1993618@jack" });
+const redisClient = redis.createClient(REDIS_URL, { auth_pass: REDIS_PASSWORD || "1993618@jack" });
 
 // Controllers (route handlers)
 import * as homeController from "./controllers/home";
@@ -34,11 +31,11 @@ const app = express();
 
 createConnection({
     type: "mysql",
-    host: "localhost",
+    host: MYSQL_URL || "localhost",
     port: 3306,
-    username: "root",
-    password: "1993618@jack",
-    database: "test",
+    username: MYSQL_USERNAME || "root",
+    password: MYSQL_PASSWORD || "1993618@jack",
+    database: MYSQL_DATABASE || "test",
     entities: [
         User
     ],

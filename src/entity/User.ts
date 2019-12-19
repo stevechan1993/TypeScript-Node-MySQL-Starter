@@ -15,8 +15,6 @@ export interface UserDocument {
   gravatar: (size: number) => string;
 }
 
-type comparePasswordFunction = (candidatePassword: string, cb: (err: Error, isMatch: boolean) => {}) => void;
-
 export interface Profile {
   name: string;
   gender: string;
@@ -29,6 +27,8 @@ export interface AuthToken {
   accessToken: string;
   kind: string;
 }
+
+type comparePasswordFunction = (candidatePassword: string, cb: (err: Error, isMatch: boolean) => {}) => void;
 
 @Entity()
 export class User extends BaseEntity implements UserDocument {
